@@ -32,6 +32,7 @@ def in_data(data_header, s, file_name, id_need):
             base.writerow(data_header)
             if id_need:
                 count += 1
+                s[5] = count
                 base.writerow([count] + s)
                 return count
             else:
@@ -40,6 +41,7 @@ def in_data(data_header, s, file_name, id_need):
         with open(file_name, mode='a') as f:
             base = csv.writer(f, delimiter=',', lineterminator="\n")
             if id_need:
+                s[5] = count
                 base.writerow([count] + s)
                 return count
             else:
@@ -54,5 +56,23 @@ def out_data(file_name, n):
         for row in base:
             print(*row, sep=' | ')
             print('-'*n)
+
+def out_all_data():
+    os.system('CLS')
+
+    with open('students.csv') as f:
+        student_table = csv.reader(f, delimiter = ',')
+        s1 = [row for row in student_table]
+    with open('class.csv') as f:
+        student_table = csv.reader(f, delimiter = ',')
+        s2 = [row for row in student_table]
+    with open('adress.csv') as f:
+        student_table = csv.reader(f, delimiter = ',')
+        s3 = [row for row in student_table]
+    for i in range(len(s1)):
+        print(*(s1[i] + s2[i] + s3[i]))
+        if i != (len(s3) - 1) and s1[i][0] == s3[i+1][0]:
+            print(*(s1[i] +s2[i] + s3[i+1]))
+            del s3[i+1]
 
 #table_type(1, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'])
